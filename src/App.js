@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RecipesPage from './pages/RecipesPage';
+import jsonUsers from './data/users'
 
 
 class App extends React.Component {
@@ -12,9 +13,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeUser: 10
+      activeUser: 10,
+      allUsers: jsonUsers
     }
 
+    console.log(this.state.allUsers);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
