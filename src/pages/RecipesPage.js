@@ -38,7 +38,8 @@ class RecipesPage extends React.Component {
             img: this.imgInput.current.value,
         }
 
-        console.log(newRecipe);
+        this.props.addRecipe(newRecipe);
+        this.closeModal();
     }
 
     render() {
