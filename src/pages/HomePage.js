@@ -9,9 +9,11 @@ class HomePage extends React.Component {
     }
 
     render() {
+        const { activeUser } = this.props;
+
         return (
             <div>
-                <RecipeNavbar/>
+                <RecipeNavbar activeUser={activeUser}/>
                 <Jumbotron>
                     <Container>
                         <h1 className="display-3">Recipe Book</h1>

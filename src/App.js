@@ -8,17 +8,29 @@ import RecipesPage from './pages/RecipesPage';
 
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeUser: null
+    }
+}
+
   render() {
+
+    const { activeUser } = this.state;
+    // const activeUser = this.state.activeUser;
+
     return (
       <Switch>
         <Route exact path="/">
-          <HomePage/>
+          <HomePage activeUser={activeUser}/>
         </Route>
         <Route path="/login">
           <LoginPage/>
         </Route>
         <Route path="/recipes">
-          <RecipesPage/>
+          <RecipesPage activeUser={activeUser}/>
         </Route>
       </Switch>
     );
