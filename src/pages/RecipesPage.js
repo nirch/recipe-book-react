@@ -1,6 +1,6 @@
 import React from 'react'
 import RecipeNavbar from '../components/RecipeNavbar'
-import { Container, Row, Col, Button, Modal } from 'react-bootstrap'
+import { Container, Row, Col, Button, Modal, Form } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 import RecipeCard from '../components/RecipeCard'
 
@@ -18,11 +18,11 @@ class RecipesPage extends React.Component {
 
 
     openModal() {
-        this.setState({showModal: true})
+        this.setState({ showModal: true })
     }
 
     closeModal() {
-        this.setState({showModal: false})
+        this.setState({ showModal: false })
     }
 
     render() {
@@ -50,11 +50,41 @@ class RecipesPage extends React.Component {
                 </Container>
 
 
-                <Modal show={showModal} onHide={this.closeModal}>
+                <Modal show={showModal} onHide={this.closeModal} size="lg">
                     <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Title>New Recipe</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group as={Row} controlId="formHorizontalEmail">
+                                <Form.Label column sm={2}>
+                                    Name
+                                </Form.Label>
+                                <Col sm={10}>
+                                    <Form.Control type="text" placeholder="Recipe name" />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} controlId="formHorizontalPassword">
+                                <Form.Label column sm={2}>
+                                    Description
+                                </Form.Label>
+                                <Col sm={10}>
+                                    <Form.Control type="text" placeholder="Recipe description" />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} controlId="formHorizontalPassword">
+                                <Form.Label column sm={2}>
+                                    Image URL
+                                </Form.Label>
+                                <Col sm={10}>
+                                    <Form.Control type="text" placeholder="Recipe image URL" />
+                                </Col>
+                            </Form.Group>
+
+                        </Form>
+                    </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.closeModal}>
                             Close
