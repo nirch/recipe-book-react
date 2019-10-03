@@ -1,4 +1,6 @@
 import React from 'react'
+import RecipeNavbar from '../components/RecipeNavbar';
+
 
 class RecipesPage extends React.Component {
     constructor(props) {
@@ -7,8 +9,13 @@ class RecipesPage extends React.Component {
     }
 
     render() { 
-        return (  
-            <h1>Recipes</h1>
+        const { activeUser, handleLogout } = this.props;
+        
+        return (
+            <div>
+                <RecipeNavbar activeUser={activeUser} handleLogout={handleLogout}/>
+                <h1>Recipes</h1>
+            </div>  
         );
     }
 }
