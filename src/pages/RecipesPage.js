@@ -1,7 +1,8 @@
 import React from 'react'
 import RecipeNavbar from '../components/RecipeNavbar'
-import { Container } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
+import RecipeCard from '../components/RecipeCard'
 
 
 class RecipesPage extends React.Component {
@@ -18,14 +19,16 @@ class RecipesPage extends React.Component {
         }
         
 
-        const recipesView = recipes.map(recipe => <p>{recipe.name}</p>)
+        const recipesCards = recipes.map(recipe => <Col key={recipe.id} lg="3" md="6"><RecipeCard recipe={recipe}/></Col>)
 
         return (
             <div>
                 <RecipeNavbar activeUser={activeUser} handleLogout={handleLogout}/>
                 <Container>
                     <h1>{activeUser.fname}'s Recipes</h1>
-                    {recipesView}
+                    <Row>
+                        {recipesCards}
+                    </Row>
                 </Container>
                 
             </div>  
