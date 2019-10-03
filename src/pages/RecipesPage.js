@@ -14,6 +14,12 @@ class RecipesPage extends React.Component {
 
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.createRecipe = this.createRecipe.bind(this);
+
+
+        this.nameInput = React.createRef();
+        this.descInput = React.createRef();
+        this.imgInput = React.createRef();
     }
 
 
@@ -23,6 +29,16 @@ class RecipesPage extends React.Component {
 
     closeModal() {
         this.setState({ showModal: false })
+    }
+
+    createRecipe() {
+        const newRecipe = {
+            name: this.nameInput.current.value,
+            desc: this.descInput.current.value,
+            img: this.imgInput.current.value,
+        }
+
+        console.log(newRecipe);
     }
 
     render() {
@@ -61,7 +77,7 @@ class RecipesPage extends React.Component {
                                     Name
                                 </Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" placeholder="Recipe name" />
+                                    <Form.Control ref={this.nameInput} type="text" placeholder="Recipe name" />
                                 </Col>
                             </Form.Group>
 
@@ -70,7 +86,7 @@ class RecipesPage extends React.Component {
                                     Description
                                 </Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" placeholder="Recipe description" />
+                                    <Form.Control ref={this.descInput} type="text" placeholder="Recipe description" />
                                 </Col>
                             </Form.Group>
 
@@ -79,7 +95,7 @@ class RecipesPage extends React.Component {
                                     Image URL
                                 </Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" placeholder="Recipe image URL" />
+                                    <Form.Control ref={this.imgInput} type="text" placeholder="Recipe image URL" />
                                 </Col>
                             </Form.Group>
 
@@ -89,8 +105,8 @@ class RecipesPage extends React.Component {
                         <Button variant="secondary" onClick={this.closeModal}>
                             Close
                         </Button>
-                        <Button variant="primary">
-                            Save Changes
+                        <Button variant="primary" onClick={this.createRecipe}>
+                            Create Recipe
                         </Button>
                     </Modal.Footer>
                 </Modal>
