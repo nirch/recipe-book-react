@@ -1,11 +1,13 @@
 import React from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            invalidLogin: false
+            invalidLogin: false,
+            successLogin: false
         }
 
         this.emailInput = React.createRef();
@@ -26,7 +28,9 @@ class LoginPage extends React.Component {
         }
 
         if (newActiveUser) {
-            alert(newActiveUser.fname);
+            this.props.handleLogin(newActiveUser);
+            this.setState({successLogin: true});
+
         } else {
             this.setState({invalidLogin: true});
         }
@@ -35,6 +39,11 @@ class LoginPage extends React.Component {
     }
 
     render() {
+
+        if (this.state.successLogin) {
+            return <Redirect to="/recipes"/>
+        }
+
         return (
             <div className="login">
                 <h1>Login to Recipe Book</h1>

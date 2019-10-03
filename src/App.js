@@ -18,10 +18,15 @@ class App extends React.Component {
     }
 
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   handleLogout() {
     this.setState({activeUser: null});
+  }
+
+  handleLogin(activeUser) {
+    this.setState({activeUser});
   }
 
   render() {
@@ -35,7 +40,7 @@ class App extends React.Component {
           <HomePage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
         <Route path="/login">
-          <LoginPage users={allUsers}/>
+          <LoginPage users={allUsers} handleLogin={this.handleLogin}/>
         </Route>
         <Route path="/recipes">
           <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
