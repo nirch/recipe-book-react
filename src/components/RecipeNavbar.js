@@ -1,18 +1,45 @@
 import React from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 
 class RecipeNavbar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            redirectToHome: false
+        }
+
+        this.logout = this.logout.bind(this);
     }
+
+    logout() {
+        this.props.handleLogout();
+
+        if (window.location.pathname != "/") {
+            this.setState({redirectToHome: true})
+        }
+    }
+
+    // // this function in onvoked after every render (but not the first)
+    // componentDidUpdate() {
+    //     if (this.state.redirectToHome) {
+    //         this.setState({redirectToHome: false})
+    //     }
+    // }
+
+    
 
     render() {
         const { activeUser } = this.props;
+        const { redirectToHome } = this.state;
+
+        if (redirectToHome) {
+            return <Redirect to="/"/>
+        }
 
         const signupLink = !activeUser ? <Nav.Link href="#/signup">Signup</Nav.Link> : null;
         const loginLink = !activeUser ? <Nav.Link href="#/login">Login</Nav.Link> : null;
-        const logoutLink = activeUser ? <Nav.Link href="#/">Logout</Nav.Link> : null;
+        const logoutLink = activeUser ? <Nav.Link onClick={this.logout}>Logout</Nav.Link> : null;
 
 
         return (

@@ -12,9 +12,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeUser: null
+      activeUser: 10
     }
-}
+
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogout() {
+    this.setState({activeUser: null});
+  }
 
   render() {
 
@@ -24,13 +30,13 @@ class App extends React.Component {
     return (
       <Switch>
         <Route exact path="/">
-          <HomePage activeUser={activeUser}/>
+          <HomePage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
         <Route path="/login">
           <LoginPage/>
         </Route>
         <Route path="/recipes">
-          <RecipesPage activeUser={activeUser}/>
+          <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
       </Switch>
     );
