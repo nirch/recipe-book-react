@@ -26,3 +26,12 @@
   margin: 50px auto;
 
 }
+
+.recipe {
+  height: 100%;
+}
+
+.recipe > img {
+  height: 250px;
+  object-fit: cover;
+}
