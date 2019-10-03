@@ -54,7 +54,7 @@ class LoginPage extends React.Component {
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control ref={this.emailInput} type="email" placeholder="Enter email" />
+                        <Form.Control ref={this.emailInput} type="email" placeholder="Enter email"/>
                         <Form.Text className="text-muted">
                             We'll never share your email with anyone else.
                         </Form.Text>
@@ -62,7 +62,7 @@ class LoginPage extends React.Component {
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control ref={this.pwdInput}  type="password" placeholder="Password" />
+                        <Form.Control ref={this.pwdInput}  type="password" placeholder="Password"/>
                     </Form.Group>
                     <Button variant="success" type="button" block onClick={this.login}>
                         Login

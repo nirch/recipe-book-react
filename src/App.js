@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RecipesPage from './pages/RecipesPage';
 import jsonUsers from './data/users'
+import jsonRecipes from './data/recipes'
 
 
 class App extends React.Component {
@@ -14,11 +15,14 @@ class App extends React.Component {
     super(props);
     this.state = {
       activeUser: null,
-      allUsers: jsonUsers
+      allUsers: jsonUsers,
+      allRecipes: jsonRecipes,
+      activeUserRecipes: []
     }
 
     this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    console.log(this.state.allRecipes);
   }
 
   handleLogout() {
@@ -26,12 +30,15 @@ class App extends React.Component {
   }
 
   handleLogin(activeUser) {
-    this.setState({activeUser});
+
+    const activeUserRecipes = this.state.allRecipes.filter(recipe => recipe.userId === activeUser.id)
+
+    this.setState({activeUser, activeUserRecipes});
   }
 
   render() {
 
-    const { activeUser, allUsers } = this.state;
+    const { activeUser, allUsers, activeUserRecipes } = this.state;
     // const activeUser = this.state.activeUser;
 
     return (
@@ -43,7 +50,7 @@ class App extends React.Component {
           <LoginPage users={allUsers} handleLogin={this.handleLogin}/>
         </Route>
         <Route path="/recipes">
-          <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
+          <RecipesPage recipes={activeUserRecipes} activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
       </Switch>
     );
