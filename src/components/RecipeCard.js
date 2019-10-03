@@ -5,7 +5,7 @@ import { Card } from 'react-bootstrap'
 class RecipeCard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = { }
     }
     render() {
         const { recipe } = this.props;
