@@ -1,10 +1,12 @@
 import React from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Alert } from 'react-bootstrap'
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            invalidLogin: false
+        }
 
         this.emailInput = React.createRef();
         this.pwdInput = React.createRef();
@@ -13,7 +15,23 @@ class LoginPage extends React.Component {
     }
 
     login() {
-        alert(this.emailInput.current.value + this.pwdInput.current.value)
+
+        const { users } = this.props;
+        let newActiveUser = null;
+        for (let i = 0; i < users.length && !newActiveUser; i++) {
+            if (users[i].email === this.emailInput.current.value &&
+                users[i].pwd === this.pwdInput.current.value) {
+                    newActiveUser = users[i];
+                }
+        }
+
+        if (newActiveUser) {
+            alert(newActiveUser.fname);
+        } else {
+            this.setState({invalidLogin: true});
+        }
+
+
     }
 
     render() {
@@ -21,6 +39,9 @@ class LoginPage extends React.Component {
             <div className="login">
                 <h1>Login to Recipe Book</h1>
                 <p>or <a href="#/signup">create an account</a></p>
+                <Alert variant="danger" show={this.state.invalidLogin}>
+                    Invalid email or password!
+                </Alert>
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
