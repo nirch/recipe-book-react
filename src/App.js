@@ -14,17 +14,19 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeUser:   {
-        "id": 1,
-        "fname": "Nir",
-        "lname": "Channes",
-        "email": "nir@nir.com",
-        "pwd": "123"
-    },
+      activeUser: null,
+    //   activeUser:   {
+    //     "id": 1,
+    //     "fname": "Nir",
+    //     "lname": "Channes",
+    //     "email": "nir@nir.com",
+    //     "pwd": "123"
+    // },
       allUsers: jsonUsers,
       allRecipes: jsonRecipes,
+      activeUserRecipes: []
       // hack for starting with my recipes
-      activeUserRecipes: jsonRecipes.filter(recipe => recipe.userId === 1)
+      // activeUserRecipes: jsonRecipes.filter(recipe => recipe.userId === 1)
     }
 
     this.handleLogout = this.handleLogout.bind(this);
