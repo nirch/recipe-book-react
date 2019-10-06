@@ -79,13 +79,29 @@ class RecipesPage extends React.Component {
     }
 
     createRecipe() {
-        const newRecipe = {
-            name: this.nameInput.current.value,
-            desc: this.descInput.current.value,
-            img: this.state.newRecipeImg.URL,
-        }
 
-        this.props.addRecipe(newRecipe);
+        const {newRecipeImg} = this.state;
+        const RecipeRow = Parse.Object.extend('Recipe');
+        const newRecipe = new RecipeRow();
+        
+        newRecipe.set('name', this.nameInput.current.value);
+        newRecipe.set('desc', this.descInput.current.value);
+        newRecipe.set('image', new Parse.File(newRecipeImg.file.name, newRecipeImg.file));
+        newRecipe.set('userId', Parse.User.current());
+        
+        newRecipe.save().then(result => {
+            console.log('Recipe created', result);
+
+            const recipe = new Recipe(result);
+            const recipes = this.state.recipes.concat(recipe);
+            this.setState({recipes});
+          },
+          (error) => {
+            // if (typeof document !== 'undefined') document.write(`Error while creating Recipe: ${JSON.stringify(error)}`);
+            console.error('Error while creating Recipe: ', error);
+          }
+        );
+
         this.closeModal();
     }
 

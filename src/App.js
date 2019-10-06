@@ -36,19 +36,6 @@ class App extends React.Component {
     this.setState({activeUser});
   }
 
-  // addRecipe(newRecipe) {
-  //   //const {activeUser, allRecipes, activeUserRecipes} this.state.activeUser
-  //   // 1) add id and user to the recipe
-  //   newRecipe.userId = this.state.activeUser.id;
-  //   newRecipe.id = this.state.allRecipes[this.state.allRecipes.length - 1].id + 1;
-
-  //   // 2) update all recipes and active user recipes
-  //   const allRecipes = this.state.allRecipes.concat(newRecipe);
-  //   const activeUserRecipes = this.state.activeUserRecipes.concat(newRecipe);
-
-  //   this.setState({allRecipes, activeUserRecipes});
-  // }
-
   render() {
 
     const { activeUser } = this.state;
