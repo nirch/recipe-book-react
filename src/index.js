@@ -5,6 +5,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { HashRouter } from 'react-router-dom'
+import Parse from 'parse'
+
+Parse.serverURL = 'https://parseapi.back4app.com'; // This is your Server URL
+Parse.initialize(
+  'y8SlUqaYkU492TGLumQSxlR7KUC3gU8YNdyDBTRu', // This is your Application ID
+  'Kr4b8k1cyMD7KOY0eZFMHqFNIDRiOIEZrbkmBcDG' // This is your Javascript key
+);
 
 
 ReactDOM.render(<HashRouter><App /></HashRouter>, document.getElementById('root'));
