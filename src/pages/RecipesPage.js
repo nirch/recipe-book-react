@@ -1,6 +1,6 @@
 import React from 'react'
 import RecipeNavbar from '../components/RecipeNavbar'
-import { Container, Row, Col, Button, Modal, Form } from 'react-bootstrap'
+import { Container, Row, Col, Button, Modal, Form, Image } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 import RecipeCard from '../components/RecipeCard'
 
@@ -9,17 +9,35 @@ class RecipesPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showModal: false
+            showModal: false,
+            newRecipeImg: {
+                file: null,
+                URL: ""
+            }
         }
 
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.createRecipe = this.createRecipe.bind(this);
+        this.imgChange = this.imgChange.bind(this);
 
 
         this.nameInput = React.createRef();
         this.descInput = React.createRef();
         this.imgInput = React.createRef();
+    }
+
+    imgChange(ev) {
+
+        let newRecipeImg = {};
+        newRecipeImg.file = ev.target.files[0];
+        if (newRecipeImg.file) {
+            newRecipeImg.URL = URL.createObjectURL(newRecipeImg.file);
+        } else {
+            newRecipeImg.URL = "";
+        }
+
+        this.setState({newRecipeImg});
     }
 
 
@@ -35,7 +53,7 @@ class RecipesPage extends React.Component {
         const newRecipe = {
             name: this.nameInput.current.value,
             desc: this.descInput.current.value,
-            img: this.imgInput.current.value,
+            img: this.state.newRecipeImg.URL,
         }
 
         this.props.addRecipe(newRecipe);
@@ -44,7 +62,7 @@ class RecipesPage extends React.Component {
 
     render() {
         const { activeUser, handleLogout, recipes } = this.props;
-        const { showModal } = this.state;
+        const { showModal, newRecipeImg } = this.state;
         //const showModal = this.state.showModal;
 
         if (!activeUser) {
@@ -93,10 +111,13 @@ class RecipesPage extends React.Component {
 
                             <Form.Group as={Row} controlId="formHorizontalPassword">
                                 <Form.Label column sm={2}>
-                                    Image URL
+                                    Image
                                 </Form.Label>
-                                <Col sm={10}>
-                                    <Form.Control ref={this.imgInput} type="text" placeholder="Recipe image URL" />
+                                <Col sm={6}>
+                                    <Form.Control type="file" placeholder="Recipe image URL" accept="image/*" onChange={this.imgChange}/>
+                                </Col>
+                                <Col sm={4}>
+                                    <Image src={newRecipeImg.URL} fluid/>
                                 </Col>
                             </Form.Group>
 
