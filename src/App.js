@@ -5,7 +5,6 @@ import { Switch, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RecipesPage from './pages/RecipesPage';
-import jsonUsers from './data/users'
 import jsonRecipes from './data/recipes'
 
 
@@ -22,7 +21,6 @@ class App extends React.Component {
     //     "email": "nir@nir.com",
     //     "pwd": "123"
     // },
-      allUsers: jsonUsers,
       allRecipes: jsonRecipes,
       activeUserRecipes: []
       // hack for starting with my recipes
@@ -62,7 +60,7 @@ class App extends React.Component {
 
   render() {
 
-    const { activeUser, allUsers, activeUserRecipes } = this.state;
+    const { activeUser, activeUserRecipes } = this.state;
     // const activeUser = this.state.activeUser;
 
     return (
@@ -71,7 +69,7 @@ class App extends React.Component {
           <HomePage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
         <Route path="/login">
-          <LoginPage users={allUsers} handleLogin={this.handleLogin}/>
+          <LoginPage handleLogin={this.handleLogin}/>
         </Route>
         <Route path="/recipes">
           <RecipesPage recipes={activeUserRecipes} activeUser={activeUser} handleLogout={this.handleLogout} addRecipe={this.addRecipe}/>
