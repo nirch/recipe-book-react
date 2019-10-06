@@ -3,6 +3,8 @@ import RecipeNavbar from '../components/RecipeNavbar'
 import { Container, Row, Col, Button, Modal, Form, Image } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 import RecipeCard from '../components/RecipeCard'
+import Parse from 'parse'
+import { Recipe } from '../data-model/Recipe';
 
 
 class RecipesPage extends React.Component {
@@ -13,7 +15,8 @@ class RecipesPage extends React.Component {
             newRecipeImg: {
                 file: null,
                 URL: ""
-            }
+            },
+            recipes: []
         }
 
         this.openModal = this.openModal.bind(this);
@@ -27,6 +30,32 @@ class RecipesPage extends React.Component {
         this.imgInput = React.createRef();
     }
 
+    componentDidMount() {
+        // only if there is an active user we will make a call to the server
+        if (this.props.activeUser) {
+
+            // getting the active user recipes
+
+            const RecipeTable = Parse.Object.extend('Recipe');
+            const query = new Parse.Query(RecipeTable);
+            query.equalTo("userId", Parse.User.current());
+            query.find().then((results) => {
+                // You can use the "get" method to get the value of an attribute
+                // Ex: response.get("<ATTRIBUTE_NAME>")
+                // if (typeof document !== 'undefined') document.write(`Recipe found: ${JSON.stringify(results)}`);
+                console.log('Recipe found', results);
+
+                const recipes = results.map(result => new Recipe(result));
+                this.setState({recipes});
+
+            }, (error) => {
+                // if (typeof document !== 'undefined') document.write(`Error while fetching Recipe: ${JSON.stringify(error)}`);
+                console.error('Error while fetching Recipe', error);
+            });
+
+        }
+    }
+
     imgChange(ev) {
 
         let newRecipeImg = {};
@@ -37,7 +66,7 @@ class RecipesPage extends React.Component {
             newRecipeImg.URL = "";
         }
 
-        this.setState({newRecipeImg});
+        this.setState({ newRecipeImg });
     }
 
 
@@ -61,8 +90,8 @@ class RecipesPage extends React.Component {
     }
 
     render() {
-        const { activeUser, handleLogout, recipes } = this.props;
-        const { showModal, newRecipeImg } = this.state;
+        const { activeUser, handleLogout } = this.props;
+        const { showModal, newRecipeImg, recipes } = this.state;
         //const showModal = this.state.showModal;
 
         if (!activeUser) {
@@ -114,10 +143,10 @@ class RecipesPage extends React.Component {
                                     Image
                                 </Form.Label>
                                 <Col sm={6}>
-                                    <Form.Control type="file" placeholder="Recipe image URL" accept="image/*" onChange={this.imgChange}/>
+                                    <Form.Control type="file" placeholder="Recipe image URL" accept="image/*" onChange={this.imgChange} />
                                 </Col>
                                 <Col sm={4}>
-                                    <Image src={newRecipeImg.URL} fluid/>
+                                    <Image src={newRecipeImg.URL} fluid />
                                 </Col>
                             </Form.Group>
 

@@ -5,7 +5,6 @@ import { Switch, Route } from 'react-router-dom'
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RecipesPage from './pages/RecipesPage';
-import jsonRecipes from './data/recipes'
 
 
 class App extends React.Component {
@@ -21,15 +20,10 @@ class App extends React.Component {
     //     "email": "nir@nir.com",
     //     "pwd": "123"
     // },
-      allRecipes: jsonRecipes,
-      activeUserRecipes: []
-      // hack for starting with my recipes
-      // activeUserRecipes: jsonRecipes.filter(recipe => recipe.userId === 1)
     }
 
     this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-    this.addRecipe = this.addRecipe.bind(this);
 
     console.log(this.state.allRecipes);
   }
@@ -39,28 +33,25 @@ class App extends React.Component {
   }
 
   handleLogin(activeUser) {
-
-    const activeUserRecipes = this.state.allRecipes.filter(recipe => recipe.userId === activeUser.id)
-
-    this.setState({activeUser, activeUserRecipes});
+    this.setState({activeUser});
   }
 
-  addRecipe(newRecipe) {
-    //const {activeUser, allRecipes, activeUserRecipes} this.state.activeUser
-    // 1) add id and user to the recipe
-    newRecipe.userId = this.state.activeUser.id;
-    newRecipe.id = this.state.allRecipes[this.state.allRecipes.length - 1].id + 1;
+  // addRecipe(newRecipe) {
+  //   //const {activeUser, allRecipes, activeUserRecipes} this.state.activeUser
+  //   // 1) add id and user to the recipe
+  //   newRecipe.userId = this.state.activeUser.id;
+  //   newRecipe.id = this.state.allRecipes[this.state.allRecipes.length - 1].id + 1;
 
-    // 2) update all recipes and active user recipes
-    const allRecipes = this.state.allRecipes.concat(newRecipe);
-    const activeUserRecipes = this.state.activeUserRecipes.concat(newRecipe);
+  //   // 2) update all recipes and active user recipes
+  //   const allRecipes = this.state.allRecipes.concat(newRecipe);
+  //   const activeUserRecipes = this.state.activeUserRecipes.concat(newRecipe);
 
-    this.setState({allRecipes, activeUserRecipes});
-  }
+  //   this.setState({allRecipes, activeUserRecipes});
+  // }
 
   render() {
 
-    const { activeUser, activeUserRecipes } = this.state;
+    const { activeUser } = this.state;
     // const activeUser = this.state.activeUser;
 
     return (
@@ -72,7 +63,7 @@ class App extends React.Component {
           <LoginPage handleLogin={this.handleLogin}/>
         </Route>
         <Route path="/recipes">
-          <RecipesPage recipes={activeUserRecipes} activeUser={activeUser} handleLogout={this.handleLogout} addRecipe={this.addRecipe}/>
+          <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
       </Switch>
     );
