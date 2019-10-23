@@ -3,6 +3,7 @@ import RecipeNavbar from '../components/RecipeNavbar'
 import { Container, Row, Col, Button, Modal, Form, Image } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 import RecipeCard from '../components/RecipeCard'
+import emailjs from 'emailjs-com';
 
 
 class RecipesPage extends React.Component {
@@ -50,6 +51,9 @@ class RecipesPage extends React.Component {
     }
 
     createRecipe() {
+        const {activeUser} = this.props;
+
+
         const newRecipe = {
             name: this.nameInput.current.value,
             desc: this.descInput.current.value,
@@ -57,6 +61,21 @@ class RecipesPage extends React.Component {
         }
 
         this.props.addRecipe(newRecipe);
+
+        // send email...
+        var template_params = {
+            "user_email": activeUser.email,
+            "recipe_name": newRecipe.name,
+            "user_name": activeUser.fname,
+            "recipe_url": "no url for now"
+         }
+         
+         var service_id = "default_service";
+         var template_id = "new_recipe";
+         emailjs.send(service_id, template_id, template_params).then(() => {
+             console.log("email sent");
+         });
+
         this.closeModal();
     }
 

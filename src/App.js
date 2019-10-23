@@ -58,6 +58,8 @@ class App extends React.Component {
     const activeUserRecipes = this.state.activeUserRecipes.concat(newRecipe);
 
     this.setState({allRecipes, activeUserRecipes});
+
+    return newRecipe;
   }
 
   render() {
