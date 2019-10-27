@@ -4,6 +4,29 @@ import { Container, Row, Col, Button, Modal, Form, Image } from 'react-bootstrap
 import { Redirect } from 'react-router-dom'
 import RecipeCard from '../components/RecipeCard'
 import emailjs from 'emailjs-com';
+import { Pie } from 'react-chartjs-2'
+
+
+const data = {
+	labels: [
+		'Red',
+		'Blue',
+		'Yellow'
+	],
+	datasets: [{
+		data: [300, 50, 100],
+		backgroundColor: [
+		'#FF6384',
+		'#36A2EB',
+		'#FFCE56'
+		],
+		hoverBackgroundColor: [
+		'#FF6384',
+		'#36A2EB',
+		'#FFCE56'
+		]
+	}]
+};
 
 
 class RecipesPage extends React.Component {
@@ -101,6 +124,7 @@ class RecipesPage extends React.Component {
                     <Row>
                         {recipesCards}
                     </Row>
+                    <Pie data={data} />
                 </Container>
 
 
