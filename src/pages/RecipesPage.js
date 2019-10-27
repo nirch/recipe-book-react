@@ -7,28 +7,6 @@ import emailjs from 'emailjs-com';
 import { Pie } from 'react-chartjs-2'
 
 
-const data = {
-	labels: [
-		'Red',
-		'Blue',
-		'Yellow'
-	],
-	datasets: [{
-		data: [300, 50, 100],
-		backgroundColor: [
-		'#FF6384',
-		'#36A2EB',
-		'#FFCE56'
-		],
-		hoverBackgroundColor: [
-		'#FF6384',
-		'#36A2EB',
-		'#FFCE56'
-		]
-	}]
-};
-
-
 class RecipesPage extends React.Component {
     constructor(props) {
         super(props);
@@ -37,6 +15,23 @@ class RecipesPage extends React.Component {
             newRecipeImg: {
                 file: null,
                 URL: ""
+            },
+            chartData: {
+                labels: [
+                    'Hard',
+                    'Easy'
+                ],
+                datasets: [{
+                    data: this.getChartData(),
+                    backgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    ],
+                    hoverBackgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    ]
+                }]
             }
         }
 
@@ -44,11 +39,55 @@ class RecipesPage extends React.Component {
         this.closeModal = this.closeModal.bind(this);
         this.createRecipe = this.createRecipe.bind(this);
         this.imgChange = this.imgChange.bind(this);
+        this.getChartData = this.getChartData.bind(this);
 
 
         this.nameInput = React.createRef();
         this.descInput = React.createRef();
         this.imgInput = React.createRef();
+    }
+
+
+    getChartData() {
+        let hard = 0;
+        let easy = 0;
+
+        this.props.recipes.forEach(recipe => {
+            if (recipe.difficulty === 1) {
+                easy++;
+            } else if (recipe.difficulty === 2) {
+                hard++;
+            }
+        });
+
+        return [hard, easy];
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // It is important that if you call setStat in componentDidUpdate
+        // it must be inside an if statemnet to avoid an infiniate loop
+        if (prevProps.recipes != this.props.recipes) {
+            // update chart data
+            const  chartData = {
+                labels: [
+                    'Hard',
+                    'Easy'
+                ],
+                datasets: [{
+                    data: this.getChartData(),
+                    backgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    ],
+                    hoverBackgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    ]
+                }]
+            };
+
+            this.setState({chartData});
+        }
     }
 
     imgChange(ev) {
@@ -104,7 +143,7 @@ class RecipesPage extends React.Component {
 
     render() {
         const { activeUser, handleLogout, recipes } = this.props;
-        const { showModal, newRecipeImg } = this.state;
+        const { showModal, newRecipeImg, chartData } = this.state;
         //const showModal = this.state.showModal;
 
         if (!activeUser) {
@@ -124,7 +163,7 @@ class RecipesPage extends React.Component {
                     <Row>
                         {recipesCards}
                     </Row>
-                    <Pie data={data} />
+                    <Pie data={chartData} />
                 </Container>
 
 

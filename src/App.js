@@ -53,6 +53,9 @@ class App extends React.Component {
     newRecipe.userId = this.state.activeUser.id;
     newRecipe.id = this.state.allRecipes[this.state.allRecipes.length - 1].id + 1;
 
+    // for the sake of the chart example adding a hard coded difficulty (easy)
+    newRecipe.difficulty = 1;
+
     // 2) update all recipes and active user recipes
     const allRecipes = this.state.allRecipes.concat(newRecipe);
     const activeUserRecipes = this.state.activeUserRecipes.concat(newRecipe);
