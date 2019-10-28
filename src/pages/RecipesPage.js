@@ -30,7 +30,7 @@ class RecipesPage extends React.Component {
         this.imgInput = React.createRef();
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         // only if there is an active user we will make a call to the server
         if (this.props.activeUser) {
 
@@ -39,19 +39,25 @@ class RecipesPage extends React.Component {
             const RecipeTable = Parse.Object.extend('Recipe');
             const query = new Parse.Query(RecipeTable);
             query.equalTo("userId", Parse.User.current());
-            query.find().then((results) => {
-                // You can use the "get" method to get the value of an attribute
-                // Ex: response.get("<ATTRIBUTE_NAME>")
-                // if (typeof document !== 'undefined') document.write(`Recipe found: ${JSON.stringify(results)}`);
-                console.log('Recipe found', results);
+            const results = await query.find();
+            const recipes = results.map(result => new Recipe(result));
+            this.setState({recipes});
 
-                const recipes = results.map(result => new Recipe(result));
-                this.setState({recipes});
 
-            }, (error) => {
-                // if (typeof document !== 'undefined') document.write(`Error while fetching Recipe: ${JSON.stringify(error)}`);
-                console.error('Error while fetching Recipe', error);
-            });
+            // Old code not using async/await
+            // query.find().then((results) => {
+            //     // You can use the "get" method to get the value of an attribute
+            //     // Ex: response.get("<ATTRIBUTE_NAME>")
+            //     // if (typeof document !== 'undefined') document.write(`Recipe found: ${JSON.stringify(results)}`);
+            //     console.log('Recipe found', results);
+
+            //     const recipes = results.map(result => new Recipe(result));
+            //     this.setState({recipes});
+
+            // }, (error) => {
+            //     // if (typeof document !== 'undefined') document.write(`Error while fetching Recipe: ${JSON.stringify(error)}`);
+            //     console.error('Error while fetching Recipe', error);
+            // });
 
         }
     }
